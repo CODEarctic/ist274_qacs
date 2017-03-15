@@ -51,8 +51,16 @@ class SaleController extends Controller
      */
     public function actionView($id)
     {
+        $saleinfo = new ActiveDataProvider([
+            'query' => (new \yii\db\Query())
+                        ->from('SALE_ITEM')
+                        ->join('LEFT JOIN', 'ITEM', 'ITEM.ItemID = SALE_ITEM.ItemID')
+                        ->where('SaleID=:SaleID', [':SaleID' => $id]),
+        ]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'saleinfo' => $saleinfo,
         ]);
     }
 

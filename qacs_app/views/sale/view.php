@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Sale */
@@ -12,9 +12,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sale-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
+
+    <div style="height: 2em;">
     <p>
+        <div class="pull-left">
+        <?= Html::a('Back To All Sales', ['index'], ['class' => 'btn btn-success']) ?>
+        </div>
+        <div class="pull-right">
         <?= Html::a('Update', ['update', 'id' => $model->SaleID], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->SaleID], [
             'class' => 'btn btn-danger',
@@ -23,19 +28,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        </div>
     </p>
+    </div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
+    <h1> Sale #<?= Html::encode($this->title) ?></h1>
+
+    <?= GridView::widget([
+        'dataProvider' => $saleinfo,
+        'columns' => [
+            //['class' => 'yii\grid\SerialColumn'],
+
             'SaleID',
-            'CustomerID',
-            'EmployeeID',
-            'SaleDate',
-            'SubTotal',
-            'Tax',
-            'Total',
+            'SaleItemID',
+            'PurchaseDate',
+            'ItemDescription',
+            'UnitPrice',
+
+            //['class' => 'yii\grid\ActionColumn'],
         ],
-    ]) ?>
+    ]); ?>
 
 </div>
